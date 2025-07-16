@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth"> <!-- The 'dark' class will be added here by JS -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shanmukha Munagala's Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --bg-main: #f8fafc; /* slate-50 */
+            --bg-secondary: #f1f5f9; /* slate-100 */
+            --bg-card: #ffffff; /* white */
+            --bg-header: rgba(255, 255, 255, 0.8);
+            --text-primary: #334155; /* slate-700 */
+            --text-secondary: #64748b; /* slate-500 */
+            --text-heading: #1e293b; /* slate-800 */
+            --border-color: #e2e8f0; /* slate-200 */
+            --indigo: #6366f1;
+            --indigo-text-tag: #3730a3; /* Dark indigo text */
+            --indigo-bg-tag: #e0e7ff;   /* Light indigo background */
+        }
+
+        html.dark {
+            --bg-main: #0f172a; /* slate-900 */
+            --bg-secondary: rgba(30, 41, 59, 0.7); /* slate-800 with opacity */
+            --bg-card: #1e293b; /* slate-800 */
+            --bg-header: rgba(15, 23, 42, 0.8);
+            --text-primary: #cbd5e1; /* slate-300 */
+            --text-secondary: #94a3b8; /* slate-400 */
+            --text-heading: #f1f5f9; /* slate-100 */
+            --border-color: #334155; /* slate-700 */
+            --indigo: #818cf8;
+            --indigo-text-tag: #c7d2fe;
+            --indigo-bg-tag: rgba(67, 56, 202, 0.5);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-secondary);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .typewriter-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.5rem;
+            background-color: var(--indigo);
+            animation: blink 0.7s infinite;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="transition-colors duration-300">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[var(--bg-header)] backdrop-blur-lg shadow-sm border-b border-[var(--border-color)]">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="#" class="text-lg font-bold text-[var(--text-heading)] tracking-wider">Shanmukha Munagala</a>
+                <nav class="hidden md:flex items-center space-x-8" id="nav-menu">
+                    <a href="#about" class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors">About</a>
+                    <a href="#skills" class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors">Skills</a>
+                    <a href="#experience" class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors">Experience</a>
+                    <a href="#projects" class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors">Projects</a>
+                    <a href="#publications" class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors">Publications</a>
+                    <a href="#contact" class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors">Contact</a>
+                </nav>
+                <div class="flex items-center">
+                    <!-- ** ADDED SOCIAL ICONS ** -->
+                    <a href="https://github.com/ShanmukhaKrishnaChaitanya" target="_blank" rel="noopener noreferrer" class="hidden md:block text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors mr-4">
+                        <i class="fab fa-github fa-lg"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/shanmukhakrishnachaitanyamunagala" target="_blank" rel="noopener noreferrer" class="hidden md:block text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors mr-4">
+                        <i class="fab fa-linkedin fa-lg"></i>
+                    </a>
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-[var(--bg-secondary)]">
+                        <i id="theme-icon" class="fas fa-moon text-[var(--text-secondary)]"></i>
+                    </button>
+                    <button id="mobile-menu-button" class="md:hidden p-2 ml-2 rounded-md text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+             <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <nav class="flex flex-col space-y-2 px-2">
+                    <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-[var(--text-primary)] hover:text-[var(--indigo)] hover:bg-[var(--bg-secondary)]">About</a>
+                    <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium text-[var(--text-primary)] hover:text-[var(--indigo)] hover:bg-[var(--bg-secondary)]">Skills</a>
+                    <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-[var(--text-primary)] hover:text-[var(--indigo)] hover:bg-[var(--bg-secondary)]">Experience</a>
+                    <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-[var(--text-primary)] hover:text-[var(--indigo)] hover:bg-[var(--bg-secondary)]">Projects</a>
+                    <a href="#publications" class="block px-3 py-2 rounded-md text-base font-medium text-[var(--text-primary)] hover:text-[var(--indigo)] hover:bg-[var(--bg-secondary)]">Publications</a>
+                    <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-[var(--text-primary)] hover:text-[var(--indigo)] hover:bg-[var(--bg-secondary)]">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto text-center">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-heading)] mb-4 tracking-tight leading-tight fade-in">
+                    <span>Shanmukha Krishna Chaitanya</span>
+                    <span class="block">Munagala</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-[var(--indigo)] font-medium mb-8 fade-in h-8" style="transition-delay: 150ms;">
+                    <span id="typewriter"></span><span class="typewriter-cursor"></span>
+                </p>
+                <p class="max-w-3xl mx-auto text-base sm:text-lg mb-10 fade-in text-[var(--text-primary)]" style="transition-delay: 300ms;">A dedicated and ambitious Computer Science Engineering student at SRM University AP. Passionate about leveraging skills in AI, Machine Learning, and web development to innovate in the tech industry.</p>
+                <a href="mailto:skcm7099@gmail.com" class="bg-[var(--indigo)] text-white font-semibold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity transform hover:scale-105 shadow-lg fade-in" style="transition-delay: 450ms;">Get In Touch</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-[var(--text-heading)] fade-in">About Me</h2>
+                <div class="grid md:grid-cols-3 gap-12 items-center fade-in">
+                    <div class="md:col-span-1">
+                        <div class="p-2 rounded-lg shadow-lg bg-[var(--bg-card)]">
+                            <img src="https://placehold.co/400x500/1e293b/94a3b8?text=SKCM" alt="About Shanmukha" class="rounded-md w-full">
+                        </div>
+                    </div>
+                    <div class="md:col-span-2 space-y-4 text-lg text-[var(--text-primary)]">
+                        <p>I am a passionate Computer Science student at SRM University AP with a strong focus on Machine Learning and Artificial Intelligence. My goal is to leverage cutting-edge technologies like Generative AI to build innovative, real-world solutions.</p>
+                        <p>Through my research and practical experience, including a role as a Front-End Developer at IIT Roorkee's Virtual Labs, I have developed a solid foundation in both software development and AI principles. I am driven by a passion for continuous learning and am eager to tackle complex challenges in the tech industry.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[var(--bg-secondary)]">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-[var(--text-heading)] fade-in">Technical Skills</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 fade-in">
+                    <!-- Skills will be injected by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-[var(--text-heading)] fade-in">Work Experience</h2>
+                <div class="relative border-l-2 border-[var(--border-color)] fade-in">
+                    <!-- Experience will be injected by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[var(--bg-secondary)]">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-[var(--text-heading)] fade-in">My Projects</h2>
+                <div class="grid md:grid-cols-2 gap-8 fade-in">
+                    <!-- Projects will be injected by JavaScript -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Publications Section -->
+        <section id="publications" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-[var(--text-heading)] fade-in">Publications</h2>
+                <a href="https://doi.org/10.1109/ICCRTEE64519.2025.11053116" target="_blank" rel="noopener noreferrer" class="block rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all fade-in">
+                    <div class="bg-[var(--bg-card)] p-8 rounded-lg">
+                        <div class="flex items-start">
+                            <i class="fas fa-book-open text-3xl text-[var(--indigo)] mr-6 mt-1 flex-shrink-0"></i>
+                            <div>
+                                <div class="flex justify-between items-start">
+                                    <h3 class="text-xl font-bold text-[var(--text-heading)] pr-4">Performance Analysis of Fire and Smoke Detection System Employing Machine Learning Techniques</h3>
+                                    <i class="fas fa-external-link-alt text-[var(--text-secondary)] mt-1 flex-shrink-0"></i>
+                                </div>
+                                <p class="text-[var(--text-primary)] mt-2 text-sm">Shanmukha Krishna Chaitanya Munagala, Bhagya Satya Sri Vutukuri, Gowreesh Raja Dandamudi, Uma Shankararao Varri, Naresh Kumar Vemula</p>
+                                <p class="text-sm text-[var(--text-secondary)] mt-2 italic">International Conference on Computational Robotics, Testing and Engineering Evaluation (ICCRTEE 2025), Kalasalingam Academy of Research and Education, Tamil Nadu, India.</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[var(--bg-secondary)]">
+            <div class="max-w-xl mx-auto text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-10 text-[var(--text-heading)] fade-in">Get In Touch</h2>
+                <div class="fade-in">
+                    <p class="text-lg mb-8 text-[var(--text-primary)]">I'm currently open to new opportunities and collaborations. My inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+                    <a href="mailto:skcm7099@gmail.com" class="inline-block bg-[var(--indigo)] text-white font-bold py-3 px-8 rounded-lg text-lg hover:opacity-90 transition-opacity shadow-lg mb-8">Say Hello</a>
+                    <div class="flex justify-center space-x-6">
+                        <a href="https://github.com/ShanmukhaKrishnaChaitanya" target="_blank" rel="noopener noreferrer" class="text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors"><i class="fab fa-github text-3xl"></i></a>
+                        <a href="https://www.linkedin.com/in/shanmukhakrishnachaitanyamunagala" target="_blank" rel="noopener noreferrer" class="text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors"><i class="fab fa-linkedin text-3xl"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--bg-card)] border-t border-[var(--border-color)]">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm">
+            <p>&copy; 2025 Shanmukha Krishna Chaitanya Munagala. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- SCROLL TO TOP ON REFRESH ---
+            if (history.scrollRestoration) {
+                history.scrollRestoration = 'manual';
+            } else {
+                window.onbeforeunload = function () {
+                    window.scrollTo(0, 0);
+                }
+            }
+
+            // --- DATA ---
+            const portfolioData = {
+                skills: [
+                    { name: "Machine Learning" },
+                    { name: "React JS" },
+                    { name: "Python" },
+                    { name: "JavaScript" },
+                    { name: "TensorFlow" },
+                    { name: "PyTorch" },
+                    { name: "SQL" },
+                    { name: "HTML5" },
+                    { name: "CSS3" },
+                    { name: "C" },
+                    { name: "Java" },
+                    { name: "Git" },
+                ],
+                experience: [
+                    { role: "Machine Learning Researcher", company: "SRM University AP", date: "June 2025 - Present", description: "Working as a Machine Learning Researcher in the domain of Electrical and Electronics Engineering (EEE) as a summer intern." },
+                    { role: "Front-End Developer", company: "Virtual Labs, IIT Roorkee", date: "June 2024 - July 2024", description: "Worked on the Adaptive Signal Processing Lab project, creating an educational website with theoretical explanations and practical implementations using Octave code." },
+                    { role: "Front-end Development Intern", company: "SRM University AP & Edunet Foundation", date: "June 2024 - July 2024", description: "Completed an 8-week internship program in collaboration with Edunet Foundation, leveraging the IBM SkillsBuild Platform." },
+                ],
+                projects: [
+                    { title: "Efficiency Fault Detection in BMS", description: "Utilizing machine learning models to detect and predict efficiency faults in Battery Management Systems for electric vehicles.", tags: ["Machine Learning", "Python", "BMS"] },
+                    { title: "Waste Image Classification", description: "A project employing Genetic Algorithms for classifying images of waste, aiming to automate recycling processes.", tags: ["Genetic Algorithm", "Computer Vision", "Python"] },
+                    { title: "Epilepsy Diagnosis via ML", description: "Developing machine learning models to analyze EEG signals for the early diagnosis of epilepsy.", tags: ["Machine Learning", "Signal Processing", "Healthcare"] },
+                    { title: "Linux Based Scientific Calculator", description: "A command-line scientific calculator built for Linux-based systems, focusing on performance and precision.", tags: ["Shell Script", "Linux", "Flask"] },
+                ]
+            };
+
+            // --- DYNAMIC CONTENT INJECTION ---
+            const skillsContainer = document.querySelector('#skills .grid');
+            portfolioData.skills.forEach(skill => {
+                const skillElement = document.createElement('div');
+                skillElement.className = 'flex items-center justify-center p-4 bg-[var(--bg-card)] rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all h-24';
+                skillElement.innerHTML = `
+                    <span class="font-semibold text-center" style="color: var(--indigo);">${skill.name}</span>
+                `;
+                skillsContainer.appendChild(skillElement);
+            });
+
+            const experienceContainer = document.querySelector('#experience .relative');
+            portfolioData.experience.forEach(job => {
+                const jobElement = document.createElement('div');
+                jobElement.className = 'mb-10 ml-8';
+                jobElement.innerHTML = `
+                    <span class="absolute flex items-center justify-center w-8 h-8 bg-[var(--bg-secondary)] rounded-full -left-4 ring-8 ring-[var(--bg-main)]">
+                        <i class="fas fa-briefcase text-[var(--indigo)]"></i>
+                    </span>
+                    <h3 class="flex items-center mb-1 text-xl font-semibold text-[var(--text-heading)]">${job.role}</h3>
+                    <p class="block mb-2 text-sm font-normal leading-none text-[var(--text-secondary)]">${job.company} &bull; ${job.date}</p>
+                    <p class="text-base text-[var(--text-primary)]">${job.description}</p>
+                `;
+                experienceContainer.appendChild(jobElement);
+            });
+
+            const projectsContainer = document.querySelector('#projects .grid');
+            portfolioData.projects.forEach(project => {
+                const projectElement = document.createElement('div');
+                projectElement.className = 'block p-6 bg-[var(--bg-card)] rounded-lg shadow-md';
+                
+                const tagsHTML = project.tags.map(tag => `<span class="text-xs font-semibold bg-[var(--indigo-bg-tag)] text-[var(--indigo-text-tag)] px-2 py-1 rounded-full">${tag}</span>`).join('');
+
+                projectElement.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl font-bold text-[var(--text-heading)]">${project.title}</h3>
+                    </div>
+                    <p class="mb-4 text-[var(--text-primary)]">${project.description}</p>
+                    <div class="flex flex-wrap gap-2">${tagsHTML}</div>
+                `;
+                projectsContainer.appendChild(projectElement);
+            });
+
+            // --- THEME TOGGLE (FINAL, ROBUST VERSION) ---
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const htmlEl = document.documentElement;
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    htmlEl.classList.add('dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    htmlEl.classList.remove('dark');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                const newTheme = htmlEl.classList.contains('dark') ? 'light' : 'dark';
+                applyTheme(newTheme);
+            });
+
+            // Set initial theme based on system preference
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(prefersDark ? 'dark' : 'light');
+
+
+            // --- MOBILE MENU ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.querySelectorAll('#mobile-menu a');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // --- SCROLL ANIMATIONS ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- TYPEWRITER EFFECT ---
+            const typewriterElement = document.getElementById('typewriter');
+            const typewriterCursor = document.querySelector('.typewriter-cursor');
+            const phrases = [
+                "Machine Learning Enthusiast",
+                "Aspiring Data Scientist",
+                "Passionate about Real-World AI Applications",
+                "Student at SRM University AP - Andhra Pradesh",
+                "Aspiring Machine Learning Engineer & Researcher"
+            ];
+            let phraseIndex = 0;
+            let charIndex = 0;
+
+            function type() {
+                typewriterCursor.style.display = 'inline-block';
+                const currentPhrase = phrases[phraseIndex];
+                
+                // Type out the phrase
+                typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+
+                let typeSpeed = 75;
+
+                // Check if the current phrase is fully typed
+                if (charIndex > currentPhrase.length) {
+                    charIndex = 0; // Reset for the next phrase
+                    phraseIndex++; // Move to the next phrase
+
+                    // Check if we've completed the loop
+                    if (phraseIndex >= phrases.length) {
+                        phraseIndex = 0; // Loop back to the start
+                        typeSpeed = 3000; // Long pause after the last phrase
+                        typewriterCursor.style.display = 'none'; // Hide cursor
+                    } else {
+                        typeSpeed = 1500; // Standard pause between phrases
+                    }
+                }
+                
+                setTimeout(type, typeSpeed);
+            }
+
+            type();
+        });
+    </script>
+</body>
+</html>
