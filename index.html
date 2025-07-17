@@ -70,6 +70,13 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
+
+        @media print {
+            body, html {
+                visibility: hidden;
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="transition-colors duration-300">
@@ -90,10 +97,11 @@
                     <a href="#contact" class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors">Contact</a>
                 </nav>
                 <div class="flex items-center">
-                    <a href="https://github.com/shanmukha-chaitanya" target="_blank" rel="noopener noreferrer" class="hidden md:block text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors mr-4">
+                    <!-- ** UPDATED SOCIAL ICONS TO BE VISIBLE ON MOBILE ** -->
+                    <a href="https://github.com/shanmukha-chaitanya" target="_blank" rel="noopener noreferrer" class="text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors mr-4">
                         <i class="fab fa-github fa-lg"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/shanmukhakrishnachaitanyamunagala" target="_blank" rel="noopener noreferrer" class="hidden md:block text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors mr-4">
+                    <a href="https://www.linkedin.com/in/shanmukhakrishnachaitanyamunagala" target="_blank" rel="noopener noreferrer" class="text-[var(--text-secondary)] hover:text-[var(--indigo)] transition-colors mr-4">
                         <i class="fab fa-linkedin fa-lg"></i>
                     </a>
                     <button id="theme-toggle" class="p-2 rounded-full hover:bg-[var(--bg-secondary)]">
@@ -143,7 +151,7 @@
                 <div class="grid md:grid-cols-3 gap-12 items-center fade-in">
                     <div class="md:col-span-1">
                         <div class="p-2 rounded-lg shadow-lg bg-[var(--bg-card)]">
-                            <img src="https://media.licdn.com/dms/image/v2/D5603AQHMFBTJGJpRfw/profile-displayphoto-scale_400_400/B56ZgV8_yUG0Ak-/0/1752714970923?e=1758153600&v=beta&t=58GHehElksV8nXHAzMvJjaoZ-Dz37ZaR_ZdBatYYbAM" alt="About Shanmukha" class="rounded-md w-full">
+                            <div id="profile-pic" class="rounded-md w-full h-96 bg-cover bg-center bg-no-repeat pointer-events-none" style="background-image: url('https://media.licdn.com/dms/image/v2/D5603AQHMFBTJGJpRfw/profile-displayphoto-scale_400_400/B56ZgV8_yUG0Ak-/0/1752714970923?e=1758153600&v=beta&t=58GHehElksV8nXHAzMvJjaoZ-Dz37ZaR_ZdBatYYbAM');"></div>
                         </div>
                     </div>
                     <div class="md:col-span-2 space-y-4 text-lg text-[var(--text-primary)]">
@@ -491,6 +499,14 @@
             }
 
             type();
+
+            // ** ADDED SCRIPT TO PREVENT IMAGE AND PAGE COPYING **
+            document.addEventListener('contextmenu', (e) => e.preventDefault());
+            document.addEventListener('keydown', function (e) {
+                if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'p')) {
+                    e.preventDefault();
+                }
+            });
         });
     </script>
 </body>
