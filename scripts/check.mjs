@@ -1,6 +1,7 @@
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { profile } from '../src/content.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const expected = [
@@ -12,7 +13,9 @@ const expected = [
 const failures = [];
 const documents = new Map();
 const stylesheets = new Set();
+const resumeRequestPages = new Set(['index.html', 'about.html', 'contact.html']);
 let checkedReferences = 0;
+let checkedResumeRequests = 0;
 
 const report = (file, message) => failures.push(`${file}: ${message}`);
 const decodeEntities = (value) => value.replace(/&(?:amp|quot|apos|lt|gt|#\d+|#x[\da-f]+);/gi, (entity) => {
@@ -63,7 +66,13 @@ async function checkReference(file, raw, kind) {
     report(file, `JavaScript placeholder in ${kind}="${raw}".`);
     return;
   }
-  if (/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(reference)) return;
+  const externalReference = /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(reference);
+  const knownResumePdf = /(?:Shanmukha-Munagala-Resume|Resume__ShanmukhaKrishnaChaitanyaMunagala)\.pdf/i.test(reference);
+  if ((!externalReference && /\.pdf(?:[?#]|$)/i.test(reference)) || knownResumePdf || /^data:application\/pdf[;,]/i.test(reference)) {
+    report(file, `Local or résumé PDF ${kind}="${raw}" is public; use the résumé request email flow instead.`);
+    return;
+  }
+  if (externalReference) return;
 
   // Resolve under the deployment prefix as well as locally, so nested pages
   // cannot accidentally point outside the GitHub Pages project directory.
@@ -139,6 +148,23 @@ for (const file of files) {
   if (!tags.some(({ name, attrs }) => name === 'main' || attrs.role?.split(/\s+/).includes('main'))) {
     report(file, 'Missing main landmark.');
   }
+  const resumeLinks = tags.filter(({ name, attrs }) => name === 'a' && attrs['data-resume-request'] === 'true');
+  if (resumeRequestPages.has(file) && resumeLinks.length !== 1) report(file, 'Expected exactly one résumé request email link.');
+  for (const { tag, attrs } of resumeLinks) {
+    try {
+      const request = new URL(attrs.href);
+      if (request.protocol !== 'mailto:' || decodeURIComponent(request.pathname) !== profile.email) {
+        report(file, 'Résumé requests must open an email to the profile address.');
+      }
+      if (!request.searchParams.get('subject')?.trim() || !request.searchParams.get('body')?.trim()) {
+        report(file, 'Résumé request email must include a subject and message.');
+      }
+      if (/\sdownload(?:\s|=|>)/i.test(tag)) report(file, 'Résumé request links must not have a download attribute.');
+      checkedResumeRequests++;
+    } catch {
+      report(file, 'Invalid résumé request email link.');
+    }
+  }
   for (const { attrs } of tags) {
     for (const key of ['href', 'src', 'poster', 'action']) {
       if (key in attrs) await checkReference(file, attrs[key], key);
@@ -156,17 +182,23 @@ for (const stylesheet of stylesheets) {
   }
 }
 
-const resume = 'assets/Shanmukha-Munagala-Resume.pdf';
-try {
-  const pdf = await readFile(path.join(root, resume));
-  if (!pdf.subarray(0, 5).equals(Buffer.from('%PDF-'))) report(resume, 'File does not have a PDF header.');
-} catch {
-  report(resume, 'Downloadable résumé is missing.');
+// GitHub Pages serves repository files even when no page links to them.
+// Keep local copies only in the ignored tmp/ directory, outside the site output.
+async function checkPublicPdfs(directory = '') {
+  for (const entry of await readdir(path.join(root, directory), { withFileTypes: true })) {
+    if (['.git', 'tmp', 'node_modules'].includes(entry.name)) continue;
+    const relative = directory ? `${directory}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) await checkPublicPdfs(relative);
+    else if (entry.isFile() && /\.pdf$/i.test(entry.name)) {
+      report(relative, 'PDF would be publicly hosted; keep the résumé in ignored tmp/ and use email requests.');
+    }
+  }
 }
+await checkPublicPdfs();
 
 if (failures.length) {
   console.error(`Portfolio check failed (${failures.length} issue${failures.length === 1 ? '' : 's'}):\n${failures.map((failure) => `- ${failure}`).join('\n')}`);
   process.exitCode = 1;
 } else {
-  console.log(`Portfolio check passed: ${files.size} pages, ${checkedReferences} local references, metadata, landmarks, unique IDs, anchors, and résumé PDF.`);
+  console.log(`Portfolio check passed: ${files.size} pages, ${checkedReferences} local references, metadata, landmarks, unique IDs, anchors, ${checkedResumeRequests} résumé request email links, and no public PDFs.`);
 }

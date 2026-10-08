@@ -21,9 +21,11 @@ Open [http://127.0.0.1:4173](http://127.0.0.1:4173). You can also preview the ex
 - `assets/styles.css` controls the design and responsive layouts.
 - `assets/site.js` handles interactive features.
 - `assets/favicon.svg` is the site icon.
-- `assets/Shanmukha-Munagala-Resume.pdf` is the downloadable résumé. Replace that file to update the download, retaining its filename or updating the corresponding template link.
+- Résumé links open a prefilled email request to the address in `src/content.mjs`. The subject and message are defined by `resumeRequestHref` in `scripts/build.mjs`; no email is sent by the website.
 
-Run `npm run check` after rebuilding. The checker verifies generated pages, titles, descriptions, language attributes, one H1 per page, main landmarks, unique IDs, local links and assets, fragment anchors, deployment path compatibility, and the résumé PDF. It does not make requests to external websites, so review external links separately when you change them.
+Run `npm run check` after rebuilding. The checker verifies generated pages, titles, descriptions, language attributes, one H1 per page, main landmarks, unique IDs, local links and assets, fragment anchors, deployment path compatibility, and the résumé request links. It rejects local PDF links, direct links to the known résumé filenames, embedded PDFs, and PDF files outside the ignored local working directories. External research PDF links are allowed. It does not make requests to external websites, so review external links separately when you change them.
+
+The résumé is available by request only. A local copy is preserved in the Git-ignored `tmp/` directory; do not copy it into `assets/` or another published directory. Removing the hosted file from the current site does not remove copies from earlier public Git commits, caches, or prior downloads.
 
 ## Pages and hosting
 
