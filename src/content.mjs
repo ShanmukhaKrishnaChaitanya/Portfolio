@@ -19,11 +19,11 @@ export const profile = {
   availability: 'Open to Machine Learning, Data Science, and AI opportunities'
 };
 
+// Project titles match the résumé exactly and are shared across cards, case studies, and metadata.
 export const projects = [
   {
     slug: 'smart-grid',
-    title: 'Predicting smart grid stability',
-    fullTitle: 'Machine Learning-Based Classification for Smart Grid Stability Using Operational Features Dataset',
+    title: 'Machine Learning-Based Classification for Smart Grid Stability Using Operational Features Dataset',
     category: 'machine-learning',
     categoryLabel: 'Machine Learning',
     eyebrow: 'ENERGY SYSTEMS',
@@ -47,8 +47,7 @@ export const projects = [
   },
   {
     slug: 'keyword-extraction',
-    title: 'Finding the keywords that matter',
-    fullTitle: 'Keyword Extraction for Content Optimization',
+    title: 'Keyword Extraction for Content Optimization',
     category: 'nlp',
     categoryLabel: 'Natural Language Processing',
     eyebrow: 'LANGUAGE & CONTENT',
@@ -71,8 +70,7 @@ export const projects = [
   },
   {
     slug: 'waste-classification',
-    title: 'Turning waste images into categories',
-    fullTitle: 'Waste Image Classification',
+    title: 'Waste Image Classification',
     category: 'computer-vision',
     categoryLabel: 'Computer Vision',
     eyebrow: 'APPLIED COMPUTER VISION',
@@ -96,8 +94,7 @@ export const projects = [
   },
   {
     slug: 'epilepsy-diagnosis',
-    title: 'Recognizing seizure patterns in EEG',
-    fullTitle: 'Epilepsy Diagnosis through Machine Learning',
+    title: 'Epilepsy Diagnosis through Machine Learning',
     category: 'machine-learning',
     categoryLabel: 'Machine Learning',
     eyebrow: 'SIGNAL CLASSIFICATION',
