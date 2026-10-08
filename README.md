@@ -37,4 +37,12 @@ The local preview serves generated HTML and assets only. It does not expose sour
 
 No deployment, commit, or push is performed by any of the available npm scripts.
 
-The custom 404 page and canonical metadata are configured for the existing `/Portfolio/` GitHub Pages address. If you move to a custom domain or different path, update these URLs in `scripts/build.mjs` and rebuild.
+The custom 404 page and canonical metadata are configured for the existing `/Portfolio/` GitHub Pages address. If you move to a custom domain or different path, update the base URL in `src/seo.mjs` and the 404 paths in `scripts/build.mjs`, then rebuild.
+
+## Search discovery and indexing
+
+The build creates `sitemap.xml` with the 10 canonical page URLs. Include it with the HTML and assets when publishing. Identity markup in `src/seo.mjs` connects the full name and the public short name to the same person; the About page uses `ProfilePage` markup. The 404 page is marked `noindex`.
+
+In Google Search Console, use the **URL-prefix** property `https://shanmukhakrishnachaitanya.github.io/Portfolio/`. Verify it using Google's supplied HTML tag or verification file, then submit `https://shanmukhakrishnachaitanya.github.io/Portfolio/sitemap.xml` and request indexing of Home and About. Keep the verification token in the source template or verification file so future deployments retain ownership verification. The public HTML-tag verification token is stored in `src/seo.mjs` and included in the homepage by the build. Keep this value unchanged to retain verification for the intended Google account.
+
+This project is hosted in a subdirectory. A `/Portfolio/robots.txt` file would not control crawling; only `https://shanmukhakrishnachaitanya.github.io/robots.txt` applies. No robots file is needed to allow indexing. If the host-root site is managed separately, its robots file can advertise this project's sitemap. Search Console submission, sitemap availability, and structured data help discovery but do not guarantee indexing or ranking.

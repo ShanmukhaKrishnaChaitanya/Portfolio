@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const port = Number(process.env.PORT || 4173);
-const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml', '.pdf': 'application/pdf' };
+const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml', '.pdf': 'application/pdf', '.xml': 'application/xml; charset=utf-8' };
 const server = http.createServer(async (req, res) => {
   try {
     let pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
@@ -12,7 +12,7 @@ const server = http.createServer(async (req, res) => {
     if (pathname.startsWith('/Portfolio/')) pathname = pathname.slice('/Portfolio'.length);
     if (pathname.endsWith('/')) pathname += 'index.html';
     const relative = pathname.replace(/^\/+/, '');
-    const allowed = /^[a-z0-9-]+\.html$/i.test(relative) || /^projects\/[a-z0-9-]+\.html$/i.test(relative) || /^assets\/[a-z0-9._-]+$/i.test(relative);
+    const allowed = relative === 'sitemap.xml' || /^[a-z0-9-]+\.html$/i.test(relative) || /^projects\/[a-z0-9-]+\.html$/i.test(relative) || /^assets\/[a-z0-9._-]+$/i.test(relative);
     if (!allowed) throw new Error('Not found');
     const file = path.resolve(root, relative);
     if (!file.startsWith(root + path.sep)) throw new Error('Not found');
