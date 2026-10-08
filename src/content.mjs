@@ -120,8 +120,10 @@ export const projects = [
   }
 ];
 
+// Keep publication titles verbatim from the supplied résumé; reuse these records everywhere.
 export const publications = [
   {
+    id: 'thermal-stress-li-ion-batteries',
     title: 'Thermal Stress based Degradation Classification of Li-ion Batteries Using Machine Learning',
     authors: 'Shanmukha Krishna Chaitanya Munagala, et al.',
     conference: '6th IEEE International Conference on Sustainable Energy and Future Electric Transportation',
@@ -133,10 +135,11 @@ export const publications = [
     doi: null
   },
   {
+    id: 'smart-grid-ground-faults',
     title: 'Detection of Single-Line-to-Ground Faults in Smart Grid using Machine Learning',
     authors: 'Sunkara Ekeswara Reddy, Shanmukha Krishna Chaitanya Munagala',
     conference: 'Fifth International Conference on Power, Control and Computing Technologies',
-    shortConference: 'ICPC2T 2026',
+    shortConference: 'ICPC2T-2026',
     venue: 'NIT Raipur, Chhattisgarh, India',
     date: '11–13 March 2026',
     year: '2026',
@@ -144,6 +147,7 @@ export const publications = [
     doi: null
   },
   {
+    id: 'ev-battery-efficiency-faults',
     title: 'A Machine Learning Approach for Efficiency-Based Fault Detection in EV batteries',
     authors: 'Bhagya Satya Sri Vutukuri, Shanmukha Krishna Chaitanya Munagala, et al.',
     conference: '2025 IEEE 4th International Conference on Smart Technologies for Power, Energy, and Control',
@@ -155,6 +159,7 @@ export const publications = [
     doi: null
   },
   {
+    id: 'fire-and-smoke-detection',
     title: 'Performance Analysis of Fire and Smoke Detection System Employing Machine Learning Techniques',
     authors: 'Shanmukha Krishna Chaitanya Munagala, et al.',
     conference: 'International Conference on Computational Robotics, Testing and Engineering Evaluation',
