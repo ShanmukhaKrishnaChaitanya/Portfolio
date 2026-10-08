@@ -69,7 +69,7 @@ async function checkReference(file, raw, kind) {
   const externalReference = /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(reference);
   const knownResumePdf = /(?:Shanmukha-Munagala-Resume|Resume__ShanmukhaKrishnaChaitanyaMunagala)\.pdf/i.test(reference);
   if ((!externalReference && /\.pdf(?:[?#]|$)/i.test(reference)) || knownResumePdf || /^data:application\/pdf[;,]/i.test(reference)) {
-    report(file, `Local or résumé PDF ${kind}="${raw}" is public; use the résumé request email flow instead.`);
+    report(file, `Local or Resume PDF ${kind}="${raw}" is public; use the Resume request email flow instead.`);
     return;
   }
   if (externalReference) return;
@@ -149,20 +149,20 @@ for (const file of files) {
     report(file, 'Missing main landmark.');
   }
   const resumeLinks = tags.filter(({ name, attrs }) => name === 'a' && attrs['data-resume-request'] === 'true');
-  if (resumeRequestPages.has(file) && resumeLinks.length !== 1) report(file, 'Expected exactly one résumé request email link.');
+  if (resumeRequestPages.has(file) && resumeLinks.length !== 1) report(file, 'Expected exactly one Resume request email link.');
   for (const { tag, attrs } of resumeLinks) {
     try {
       const request = new URL(attrs.href);
       if (request.protocol !== 'mailto:' || decodeURIComponent(request.pathname) !== profile.email) {
-        report(file, 'Résumé requests must open an email to the profile address.');
+        report(file, 'Resume requests must open an email to the profile address.');
       }
       if (!request.searchParams.get('subject')?.trim() || !request.searchParams.get('body')?.trim()) {
-        report(file, 'Résumé request email must include a subject and message.');
+        report(file, 'Resume request email must include a subject and message.');
       }
-      if (/\sdownload(?:\s|=|>)/i.test(tag)) report(file, 'Résumé request links must not have a download attribute.');
+      if (/\sdownload(?:\s|=|>)/i.test(tag)) report(file, 'Resume request links must not have a download attribute.');
       checkedResumeRequests++;
     } catch {
-      report(file, 'Invalid résumé request email link.');
+      report(file, 'Invalid Resume request email link.');
     }
   }
   for (const { attrs } of tags) {
@@ -190,7 +190,7 @@ async function checkPublicPdfs(directory = '') {
     const relative = directory ? `${directory}/${entry.name}` : entry.name;
     if (entry.isDirectory()) await checkPublicPdfs(relative);
     else if (entry.isFile() && /\.pdf$/i.test(entry.name)) {
-      report(relative, 'PDF would be publicly hosted; keep the résumé in ignored tmp/ and use email requests.');
+      report(relative, 'PDF would be publicly hosted; keep the Resume in ignored tmp/ and use email requests.');
     }
   }
 }
@@ -200,5 +200,5 @@ if (failures.length) {
   console.error(`Portfolio check failed (${failures.length} issue${failures.length === 1 ? '' : 's'}):\n${failures.map((failure) => `- ${failure}`).join('\n')}`);
   process.exitCode = 1;
 } else {
-  console.log(`Portfolio check passed: ${files.size} pages, ${checkedReferences} local references, metadata, landmarks, unique IDs, anchors, ${checkedResumeRequests} résumé request email links, and no public PDFs.`);
+  console.log(`Portfolio check passed: ${files.size} pages, ${checkedReferences} local references, metadata, landmarks, unique IDs, anchors, ${checkedResumeRequests} Resume request email links, and no public PDFs.`);
 }

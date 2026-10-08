@@ -19,7 +19,7 @@ export const profile = {
   availability: 'Open to Machine Learning, Data Science, and AI opportunities'
 };
 
-// Project titles match the résumé exactly and are shared across cards, case studies, and metadata.
+// Project titles match the Resume exactly and are shared across cards, case studies, and metadata.
 export const projects = [
   {
     slug: 'smart-grid',
@@ -117,7 +117,7 @@ export const projects = [
   }
 ];
 
-// Keep publication titles verbatim from the supplied résumé; reuse these records everywhere.
+// Keep publication titles verbatim from the supplied Resume; reuse these records everywhere.
 export const publications = [
   {
     id: 'thermal-stress-li-ion-batteries',
